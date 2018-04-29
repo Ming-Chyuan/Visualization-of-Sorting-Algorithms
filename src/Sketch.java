@@ -27,6 +27,7 @@ public class Sketch extends PApplet {
 
 	public void setup() {
 		background(0);
+		surface.setTitle("Visualization of Sorting Algorithms");
 		
 		int arr[] = new int[DatasLength];
 		initializeArray(arr);
