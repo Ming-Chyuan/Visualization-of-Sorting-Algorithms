@@ -30,20 +30,20 @@ public class QuickSort extends Thread {
 				if(r == lb) break;
 				r--;
 			}
-			
+
+			try {
+				focus[l] = true;
+				focus[r] = true;
+				hold[rb] = true;
+				Thread.sleep(Sketch.delay);
+				focus[l] = false;
+				focus[r] = false;
+				hold[rb] = false;
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 			if(l < r) {
-				try {
-					focus[l] = true;
-					focus[r] = true;
-					hold[rb] = true;
-					Thread.sleep(Sketch.delay);
-					focus[l] = false;
-					focus[r] = false;
-					hold[rb] = false;
-					swap(arr, l, r);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
+				swap(arr, l, r);
 			} else {
 				break;
 			}

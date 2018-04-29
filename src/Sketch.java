@@ -2,18 +2,20 @@ import processing.core.PApplet;
 
 public class Sketch extends PApplet {
 	private Array array;
-	private int rectW = 3;
-	private int rectDiffH = 2;
+	private final int rectW = 3;
+	private final int rectDiffH = 2;
 	private BubbleSort bubbleSort;
 	private SelectionSort selectionSort;
 	private CocktailSort cocktailSort;
 	private MergeSort mergeSort;
 	private QuickSort quickSort;
+	private RadixSort radixSort;
 	private InsertionSort insertionSort;
 	private ShellSort shellSort;
-	private int DatasLength = 100;
-	private int margin = 30;
-	public static int delay = 30;
+	private HeapSort heapSort;
+	private final int DatasLength = 100;
+	private final int margin = 30;
+	public static int delay = 32;
 	
 	public static void main(String[] args) {
 		PApplet.main("Sketch");
@@ -41,10 +43,14 @@ public class Sketch extends PApplet {
 		mergeSort.start();
 		quickSort = new QuickSort(array);
 		quickSort.start();
+		radixSort = new RadixSort(array, DatasLength * rectDiffH);
+		radixSort.start();
 		insertionSort = new InsertionSort(array);
 		insertionSort.start();
 		shellSort = new ShellSort(array);
 		shellSort.start();
+		heapSort = new HeapSort(array);
+		heapSort.start();
 	}
 	
 	public void draw() {
@@ -54,10 +60,20 @@ public class Sketch extends PApplet {
 		drawDatas(cocktailSort.array, 2, 0, "Cocktail Sort");
 		drawDatas(mergeSort.array, 0, 1, "Merge Sort");
 		drawDatas(quickSort.array, 1, 1, "Quick Sort");
-		drawDatas(array, 2, 1, "...");
+		drawDatas(radixSort.array, 2, 1, "Radix Sort");
 		drawDatas(insertionSort.array, 0, 2, "Insertion Sort");
 		drawDatas(shellSort.array, 1, 2, "Shell Sort");
-		drawDatas(array, 2, 2, "...");
+		drawDatas(heapSort.array, 2, 2, "Heap Sort");
+
+		text("delay: " + delay + "ms", 5, 15);
+		text("Press R to reset", 100, 15);
+		text("Press +/- to speed up/down", 100, 30);
+	}
+	
+	public void keyTyped() {
+		if(key == 'r') setup();
+		if(key == '-' && delay < 1024) delay *= 2;
+		if(key == '+' && delay > 1) delay /= 2;
 	}
 	
 	private void initializeArray(int[] arr) {
